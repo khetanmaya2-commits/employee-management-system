@@ -1,0 +1,32 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: ems-backend
+
+    ports:
+      - "8000:8000"
+
+    env_file:
+      - ./backend/.env
+
+    volumes:
+      - ./backend:/app
+      - ems-sqlite-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: ems-frontend
+
+    ports:
+      - "3000:80"
+
+    depends_on:
+      - backend
+
+volumes:
+  ems-sqlite-data:      
